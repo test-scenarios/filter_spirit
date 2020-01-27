@@ -7,6 +7,13 @@ if(${CMAKE_VERSION} VERSION_LESS 3.12)
     cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
 endif()
 
+include(cmake/HunterGate.cmake)
+
+HunterGate(
+		URL "https://github.com/cpp-pm/hunter/archive/v0.23.240.tar.gz"
+		SHA1 "ca19f3769e6c80cfdd19d8b12ba5102c27b074e0"
+)
+
 project(filter_spirit
 	VERSION 0.3.0
 	DESCRIPTION "advanced item filter generator for the game Path of Exile using own DSL and online APIs"
@@ -21,6 +28,10 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 	set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
 		"Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
+
+hunter_add_package(Boost COMPONENTS system program_options test)
+hunter_add_package(OpenSSL)
+hunter_add_package(nlohmann_json)
 
 ##############################################################################
 # options for customizing the build
